@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/logo.png" alt="CFMLFiddle" width="96">
+  <img src="assets/logo.png" alt="cfmlFiddle" width="96">
 </p>
 
-<h1 align="center">CFMLFiddle</h1>
+<h1 align="center">cfmlFiddle</h1>
 
 <p align="center">
   A self-hosted CFML playground that runs multiple engines side by side.<br>
@@ -10,18 +10,18 @@
 </p>
 
 <p align="center">
-  <img src="assets/screenshot.png" alt="CFMLFiddle screenshot" width="800">
+  <img src="assets/screenshot.png" alt="cfmlFiddle screenshot" width="800">
 </p>
 
 ---
 
 ## What is this?
 
-CFMLFiddle lets you write CFML code and run it against Adobe ColdFusion, Lucee, and BoxLang at the same time. You pick which engine versions to install, down to the patch level, and you can compare output across all of them in one view.
+cfmlFiddle lets you write CFML code and run it against Adobe ColdFusion, Lucee, and BoxLang at the same time. You pick which engine versions to install, down to the patch level, and you can compare output across all of them in one view.
 
 It runs locally on your machine through CommandBox. No login, no restricted functions, works offline.
 
-Online tools like [CFFiddle.org](https://cffiddle.org), [TryCF.com](https://trycf.com), and [Try BoxLang](https://try.boxlang.io/) are handy for quick browser tests. CFMLFiddle is for when you need to pin a specific version, test something that touches the filesystem, or figure out why Lucee and Adobe CF disagree on how `dateFormat` handles a weird edge case.
+Online tools like [CFFiddle.org](https://cffiddle.org), [TryCF.com](https://trycf.com), and [Try BoxLang](https://try.boxlang.io/) are handy for quick browser tests. cfmlFiddle is for when you need to pin a specific version, test something that touches the filesystem, or figure out why Lucee and Adobe CF disagree on how `dateFormat` handles a weird edge case.
 
 ## Features
 
@@ -30,14 +30,14 @@ Online tools like [CFFiddle.org](https://cffiddle.org), [TryCF.com](https://tryc
 - Light and dark themes (follows your OS preference, or toggle manually)
 - Interactive mode auto-detects forms and renders them in a sandboxed iframe so they can post back to themselves
 - Save and load code snippets, or import directly from a GitHub Gist URL
-- Session panel lists every payload you've run with timestamps — click any to reload it into the editor
+- Session panel lists every payload you've run with timestamps - click any to reload it into the editor
 - Archive All zips up old payloads and clears the session
 - Per-result refresh (re-executes and updates timing) and dismiss buttons
 - Server management with context menus for admin panels, docs, and project links
 - Real-time status via Server-Sent Events (falls back to polling)
 - Heartbeat checks all engines with TCP socket connections in ~50ms
 - Keyboard accessible with focus indicators, skip link, and ARIA roles
-- All frontend libraries ship locally — no CDN required
+- All frontend libraries ship locally - no CDN required
 
 ## Engines included
 
@@ -76,7 +76,7 @@ box server start serverConfigFile=current-servers/server.cf2025.json
 
 ## How it works
 
-CFMLFiddle is a single-page app. One CommandBox server hosts the UI (the editor, status bar, results panel). When you click Run, it writes your code to a temp file in `_payloads/`, then uses `cfhttp` to execute that file on the target engine(s) and returns the output.
+cfmlFiddle is a single-page app. One CommandBox server hosts the UI (the editor, status bar, results panel). When you click Run, it writes your code to a temp file in `_payloads/`, then uses `cfhttp` to execute that file on the target engine(s) and returns the output.
 
 Each engine is a separate CommandBox server sharing the same `www/` webroot. They all run the same `Application.cfc`, which handles IP allowlisting, payload token auth, and heartbeat monitoring.
 
@@ -84,7 +84,7 @@ The heartbeat uses a fast TCP socket check (~50ms for all engines) and can use e
 
 ### Interactive mode
 
-If your code outputs a form, CFMLFiddle auto-detects it and renders the result in an iframe. Forms can post back to themselves, so you can build multi-step scripts that process their own input. You can also force interactive mode with the checkbox.
+If your code outputs a form, cfmlFiddle auto-detects it and renders the result in an iframe. Forms can post back to themselves, so you can build multi-step scripts that process their own input. You can also force interactive mode with the checkbox.
 
 ## Configuration
 
@@ -107,7 +107,7 @@ Server configs live in `current-servers/`. Each `server.*.json` file defines a C
 
 Each config includes a `jvm.javaHome` path that points to the Java installation used by that engine. Different engines may require different Java versions (e.g. Adobe CF2016 needs Java 11, while BoxLang and CF2025 need Java 21+). If you have multiple JDKs installed, edit `javaHome` in each server config to match. If omitted, CommandBox uses whatever Java it was started with.
 
-The `customTagPaths` and `app.libDirs` paths reference the `CustomTags/` and `JavaLibs/` directories in the project root. If you install CFMLFiddle somewhere other than the default location, update these paths in each server config.
+The `customTagPaths` and `app.libDirs` paths reference the `CustomTags/` and `JavaLibs/` directories in the project root. If you install cfmlFiddle somewhere other than the default location, update these paths in each server config.
 
 ## Project structure
 
