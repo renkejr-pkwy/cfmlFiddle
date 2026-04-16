@@ -1,0 +1,69 @@
+{
+    "name": "cfmlfiddle-cf2023",
+    "app": {
+        "cfengine": "adobe@2023",
+        "libDirs": "C:\\cfmlfiddle\\JavaLibs"
+    },
+    "dockEnable": true,
+    "trayEnable": true,
+    "json": {
+        "ansiColors": {
+            "constant": "48B9FF"
+        }
+    },
+    "customTagPaths": [
+        {
+            "physical": "C:\\cfmlfiddle\\CustomTags",
+            "primary": "physical"
+        }
+    ],
+    "jvm": {
+        "args": [
+            "-D:javax.xml.accessExternalDTD=''",
+            "-D:javax.xml.accessExternalSchema=''",
+            "-D:javax.xml.accessExternalStylesheet=''",
+            "--add-opens=java.base/sun.nio.cs=ALL-UNNAMED",
+            "--add-opens=java.naming/javax.naming.directory=ALL-UNNAMED",
+            "--add-opens=java.base/java.util.stream=ALL-UNNAMED"
+        ]
+    },
+    "web": {
+        "host": "127.0.0.1",
+        "hostAlias": "localhost",
+        "webroot": "../www",
+        "directoryBrowsing": true,
+        "accessLogEnable": true,
+        "blockCFAdmin": false,
+        "blockSensitivePaths": true,
+        "welcomeFiles": "index.cfm,index.html,index.htm",
+        "gzipEnable": true,
+        "blockFlashRemoting": true,
+        "rewrites": {
+            "enable": true
+        },
+        "HTTP": {
+            "enable": true,
+            "port": 12023
+        },
+        "mimeTypes": {
+            "heic": "image/heic",
+            "webmanifest": "application/manifest+json",
+            "avif": "image/avif",
+            "webp": "image/webp",
+            "woff2": "font/woff2",
+            "woff": "font/woff",
+            "mjs": "text/javascript",
+            "map": "application/json"
+        },
+        "allowedExt": "webmanifest,avif,webp,woff2,woff,mjs,map"
+    },
+    "debug": true,
+    "trace": false,
+    "console": false,
+    "profile": "development",
+    "openBrowser": false,
+    "openBrowserURL": "http://localhost:12023/",
+    "scripts": {
+        "onServerInitialInstall": "cfpm install caching debugger zip"
+    }
+}
