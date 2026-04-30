@@ -2,7 +2,7 @@
     "name": "cfmlfiddle-lucee6",
     "app": {
         "cfengine": "lucee@6",
-        "libDirs": "C:\\cfmlfiddle\\JavaLibs"
+        "libDirs": "../JavaLibs"
     },
     "dockEnable": true,
     "trayEnable": true,
@@ -13,7 +13,7 @@
     },
     "customTagPaths": [
         {
-            "physical": "C:\\cfmlfiddle\\CustomTags",
+            "physical": "../CustomTags",
             "primary": "physical"
         }
     ],
@@ -21,7 +21,7 @@
         "customTagMappings": {
             "mapping": [
                 {
-                    "physical": "C:\\cfmlfiddle\\CustomTags",
+                    "physical": "../CustomTags",
                     "primary": "physical",
                     "virtual": "/customtags",
                     "readonly": false
@@ -30,7 +30,7 @@
         }
     },
     "jvm": {
-        "javaHome": "C:\\Program Files\\Java\\jdk-24",
+        "javaVersion": "openjdk21_jdk",
         "args": [
             "-D:javax.xml.accessExternalDTD=''",
             "-D:javax.xml.accessExternalSchema=''",

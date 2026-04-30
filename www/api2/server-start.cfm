@@ -89,17 +89,36 @@
 </cfcatch>
 </cftry>
 
-<!--- Fire-and-forget: cmd /c start detaches the process. Minimized unless showConsole requested. --->
-<cfset startFlag = structKeyExists(url, "showConsole") ? "" : "/min">
-<cfexecute
-	name="cmd"
-	arguments="/c start #startFlag# """" ""#boxExe#"" server start serverConfigFile=""#configPath#"""
-	timeout="30">
-</cfexecute>
+<!--- Fire-and-forget: Detect OS and use appropriate command for detached process --->
+<cfset isWindows = findNoCase("windows", server.os.name) gt 0>
+<cfset isMac = findNoCase("mac", server.os.name) gt 0>
 
-<cfset response["success"] = application.jTrue>
-<cfset response["message"] = "Server '#serverKey#' start command issued.">
-<cfset response["server"] = serverKey>
-<cfset response["duration"] = javacast("int", getTickCount() - _startTick)>
+<cfif !isWindows && !isMac>
+	<cfset response["success"] = application.jFalse>
+	<cfset response["error"] = "Unsupported operating system.">
+	<cfset response["duration"] = javacast("int", getTickCount() - _startTick)>
+	<cfoutput>#application.jsonUtil.serializeJSON(var=response, strictMapping=true)#</cfoutput>
+<cfelse>
+	<cfif isWindows>
+		<!--- Windows: cmd /c start detaches the process. Minimized unless showConsole requested. --->
+		<cfset startFlag = structKeyExists(url, "showConsole") ? "" : "/min">
+		<cfexecute
+			name="cmd"
+			arguments="/c start #startFlag# """" ""#boxExe#"" server start serverConfigFile=""#configPath#"""
+			timeout="30">
+		</cfexecute>
+	<cfelseif isMac>
+		<cfexecute
+			name="#boxExe#"
+			arguments="server start serverConfigFile=""#configPath#"""
+			timeout="30">
+		</cfexecute>
+	</cfif>
+
+	<cfset response["success"] = application.jTrue>
+	<cfset response["message"] = "Server '#serverKey#' start command issued.">
+	<cfset response["server"] = serverKey>
+	<cfset response["duration"] = javacast("int", getTickCount() - _startTick)>
+</cfif>
 
 <cfoutput>#application.jsonUtil.serializeJSON(var=response, strictMapping=true)#</cfoutput>

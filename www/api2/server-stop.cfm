@@ -25,24 +25,32 @@
 <cfset application.serverStatuses[serverKey]["lastChecked"] = dateTimeFormat(now(), application.timestampMask)>
 
 <!--- Run box server stop synchronously - it returns after the server is stopped --->
-<cftry>
-	<cfexecute
-		name="#boxExe#"
-		arguments="server stop #serverInfo['name']#"
-		timeout="60"
-		variable="stopOutput">
-	</cfexecute>
+<cfset isWindows = findNoCase("windows", server.os.name) gt 0>
+<cfset isMac = findNoCase("mac", server.os.name) gt 0>
 
-	<cfset application.serverStatuses[serverKey]["status"] = "offline">
-	<cfset structDelete(application.serverStatuses[serverKey], "statusLockedUntil")>
-
-	<cfset response["success"] = application.jTrue>
-	<cfset response["message"] = "Server '#serverKey#' stopped.">
-<cfcatch>
+<cfif !isWindows && !isMac>
 	<cfset response["success"] = application.jFalse>
-	<cfset response["error"] = "Stop command failed: " & cfcatch.message>
-</cfcatch>
-</cftry>
+	<cfset response["error"] = "Unsupported operating system.">
+<cfelse>
+	<cftry>
+		<cfexecute
+			name="#boxExe#"
+			arguments="server stop #serverInfo['name']#"
+			timeout="60"
+			variable="stopOutput">
+		</cfexecute>
+
+		<cfset application.serverStatuses[serverKey]["status"] = "offline">
+		<cfset structDelete(application.serverStatuses[serverKey], "statusLockedUntil")>
+
+		<cfset response["success"] = application.jTrue>
+		<cfset response["message"] = "Server '#serverKey#' stopped.">
+	<cfcatch>
+		<cfset response["success"] = application.jFalse>
+		<cfset response["error"] = "Stop command failed: " & cfcatch.message>
+	</cfcatch>
+	</cftry>
+</cfif>
 
 <cfset response["server"] = serverKey>
 <cfset response["duration"] = javacast("int", getTickCount() - _startTick)>

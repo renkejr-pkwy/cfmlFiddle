@@ -1,0 +1,16 @@
+{
+    "modules": {
+        "compat-cfml": {
+            "disabled": "false",
+            "settings": {
+                "engine": "adobe",
+                "enabled": true,
+                "clientManagement": false,
+                "nullIsUndefined": true,
+                "booleansAreNumbers": true,
+                "lenientJSONParsing": false,
+                "queryNullToEmpty": true
+            }
+        }
+    }
+}

@@ -2,7 +2,7 @@
     "name": "cfmlfiddle-cf2025",
     "app": {
         "cfengine": "adobe@2025",
-        "libDirs": "C:\\cfmlfiddle\\JavaLibs"
+        "libDirs": "../JavaLibs"
     },
     "dockEnable": true,
     "trayEnable": true,
@@ -13,12 +13,12 @@
     },
     "customTagPaths": [
         {
-            "physical": "C:\\cfmlfiddle\\CustomTags",
+            "physical": "../CustomTags",
             "primary": "physical"
         }
     ],
     "jvm": {
-        "javaHome": "C:\\Program Files\\Java\\jdk-24",
+        "javaVersion": "openjdk21_jdk",
         "args": [
             "-D:javax.xml.accessExternalDTD=''",
             "-D:javax.xml.accessExternalSchema=''",
